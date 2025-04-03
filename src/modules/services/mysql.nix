@@ -12,10 +12,10 @@ with lib; let
   emptyConfig = format.generate "empty.cnf" { };
   mysqlOptions =
     if !cfg.useDefaultsExtraFile then
-      "--defaults-file=${configFile}"
+      ''--defaults-file="${configFile}"''
     else
-      "--defaults-extra-file=${configFile}";
-  mysqldOptions = "--defaults-file=${configFile} --datadir=$MYSQL_HOME --basedir=${cfg.package}";
+      ''--defaults-extra-file="${configFile}"'';
+  mysqldOptions = ''--defaults-file="${configFile}" --datadir="$MYSQL_HOME" --basedir="${cfg.package}"'';
 
   mysqlWrapped = pkgs.writeShellScriptBin "mysql" ''
     exec ${cfg.package}/bin/mysql ${mysqlOptions} "$@"
